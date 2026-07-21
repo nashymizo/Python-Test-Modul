@@ -47,7 +47,7 @@ def Kassenbon(warenwert):
 # 1. Wir rufen die Funktion auf und fangen ALLE 7 Rückgabewerte der Reihe nach auf:
 # wert, m_rabatt, s_rabatt, v_kosten, verp_kosten, steuer, summe = Kassenbon(200)
 
-dein_einkauf = int(input("Wie hoch ist dein Warenwert?"))
+dein_einkauf = float(input("Wie hoch ist dein Warenwert? "))
 
 mein_bon = Kassenbon(dein_einkauf)
 
