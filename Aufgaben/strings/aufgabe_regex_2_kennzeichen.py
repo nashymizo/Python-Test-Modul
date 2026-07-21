@@ -20,6 +20,13 @@ import re
 for item in kennzeichen:
 
     ergebnis =re.findall(r"^[A-Z]{1,3} [A-Z]{1,2} [A-Z0-9]{1,5}$", item)
-    print(ergebnis)
+
+
+    if  ergebnis:
+        print(f"{item} is in kennzeichen")
+
+    else:
+        print(f"{item} is not in kennzeichen")
+
 
 
