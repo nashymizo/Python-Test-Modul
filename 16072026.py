@@ -14,3 +14,6 @@ print(text[-27:])
 #profi
 print(re.findall(r"[A-Z][0-9]+", text))
 print(re.findall(r" ([0-9+]+)", text))
+
+
+
