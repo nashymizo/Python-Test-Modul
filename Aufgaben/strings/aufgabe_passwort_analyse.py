@@ -11,7 +11,7 @@ mindestens eine Zahl enthält.
 
 """
 
-passwort = "MeinGeheimes&§123"
+passwort = "Sjasij2342kdf"
 #
 def password_analysis(password):
     up_letter = False
