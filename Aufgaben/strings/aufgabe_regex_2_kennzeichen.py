@@ -23,10 +23,10 @@ for item in kennzeichen:
 
 
     if  ergebnis:
-        print(f"{item} is in kennzeichen")
+        print(f"{item} ist ein kennzeichen")
 
     else:
-        print(f"{item} is not in kennzeichen")
+        print(f"{item} ist kein kennzeichen")
 
 
 
