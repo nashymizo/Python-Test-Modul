@@ -1,5 +1,6 @@
 import telefonbuch_logik_1a
 import json
+import telefonbuch_sortierung_1b
 
 
 def kontakt_aufnehmen():
@@ -47,6 +48,7 @@ def kontakt_speichern(neuer_kontakt):
 
 neuer_eintrag = kontakt_aufnehmen()
 kontakt_speichern(neuer_eintrag)
+telefonbuch_sortierung_1b.kontakte_sortieren()
 
 
 

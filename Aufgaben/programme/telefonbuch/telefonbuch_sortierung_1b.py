@@ -25,4 +25,5 @@ def kontakte_sortieren(dateiname="kontakte.json"):
         print(f"Fehler beim Sortieren: {e}")
 
 
-kontakte_sortieren()
+if __name__ == "__main__":
+    kontakte_sortieren()
