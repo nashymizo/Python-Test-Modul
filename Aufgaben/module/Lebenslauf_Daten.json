@@ -1,0 +1,49 @@
+{
+    "personal": {
+        "firstname": "Nico",
+        "lastname": "Kehl",
+        "birthday": "06.07.1992",
+        "address": {
+            "postal code": "66271",
+            "city": "Kleinblittersdorf",
+            "street": "Saargemünder Str. 135"
+        },
+        "Kontakt": {
+            "email": "Nico.Kehl92@web.de",
+            "phone": "0174/1706642"
+        }
+    },
+    "education": [
+        {
+            "school": "Grundschule",
+            "degree": "Abschluss",
+            "start_date": "1998",
+            "end_date": "2002"
+        },
+        {
+            "school": "Weiterführende Schule",
+            "degree": "Abschluss",
+            "start_date": "2002",
+            "end_date": "2006"
+        }
+    ],
+    "experience": [
+        {
+            "company": "",
+            "position": "",
+            "start_date": "",
+            "end_date": ""
+        },
+        {
+            "company": "",
+            "position": "",
+            "start_date": "",
+            "end_date": ""
+        }
+    ],
+    "skills": [
+        "Python",
+        "Git",
+        "SQL"
+    ]
+}
