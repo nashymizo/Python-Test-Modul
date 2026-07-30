@@ -30,12 +30,12 @@ meineDaten = {
         "birthday": "06.07.1992",
         "address": {
             "postal code": "66271",
-            "city": "Kleinblittersdorf",
-            "street": "Saargemünder Str. 135"
+            "city": "Klei*****",
+            "street": "Saargemü*******"
         },
         "Kontakt": {
             "email": "Nico.Kehl92@web.de",
-            "phone": "0174/1706642"
+            "phone": "0174/170****"
         }
     },
 
@@ -114,7 +114,7 @@ def kopfzeile_erstellen(doc, personal_daten):
     )
     doc.add_paragraph(info_text)
 
-
+daten_speichern(meineDaten)
 meine_daten = daten_laden()
 mein_doc = Document()
 kopfzeile_erstellen(mein_doc, meine_daten["personal"])
