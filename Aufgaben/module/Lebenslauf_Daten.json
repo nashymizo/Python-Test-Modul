@@ -2,15 +2,15 @@
     "personal": {
         "firstname": "Nico",
         "lastname": "Kehl",
-        "birthday": "06.07.1992",
+        "birthday": "0*.0*.199*",
         "address": {
-            "postal code": "66271",
+            "postal code": "66***",
             "city": "Klei*****",
             "street": "Saargemü*******"
         },
         "Kontakt": {
-            "email": "Nico.Kehl92@web.de",
-            "phone": "0174/170****"
+            "email": "Ni**********",
+            "phone": "01***/*70****"
         }
     },
     "education": [
@@ -29,16 +29,16 @@
     ],
     "experience": [
         {
-            "company": "",
-            "position": "",
-            "start_date": "",
-            "end_date": ""
+            "company": "IHK",
+            "position": "Prüfer",
+            "start_date": "2000",
+            "end_date": "2006"
         },
         {
-            "company": "",
-            "position": "",
-            "start_date": "",
-            "end_date": ""
+            "company": "Comcave",
+            "position": "Umschüler, Fachinformatik Anwendungsentwicklung",
+            "start_date": "hier",
+            "end_date": "dort"
         }
     ],
     "skills": [
