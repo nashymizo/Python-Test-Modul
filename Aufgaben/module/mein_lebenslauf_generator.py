@@ -28,6 +28,10 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Pt, RGBColor
 from docx.oxml import OxmlElement, parse_xml
 from docx.oxml.ns import qn, nsdecls
+from docx.shared import Inches
+from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
+
+# from pdf.create_simple_pdf import width
 
 meineDaten = {
     "personal": {
@@ -69,7 +73,7 @@ meineDaten = {
         },
         {
             "company": "Comcave",
-            "position": "Umschüler, Fachinformatik Anwendungsentwicklung",
+            "position": "Umschüler, Fachinformatik AE",
             "start_date": "hier",
             "end_date": "dort"
         }
@@ -104,17 +108,44 @@ def daten_laden(dateipfad="Lebenslauf_Daten.json"):
         print(f"Datei Upload fehlgeschlagen, Fehlermeldung: {e}")
 
 
-def kopfzeile_erstellen(doc, personal_daten):
+def kopfzeile_erstellen(doc, personal_daten, bild_pfad):
 
-    p_name = doc.paragraphs[0]
+    tabelle = doc.add_table(rows=1, cols=2)
+    tabelle.autofit = False
+
+    tabelle.columns[0].width = Pt(250)  # Linke Spalte schmal
+    tabelle.columns[1].width = Pt(330)  # Rechte Spalte breit
+
+
+    zeile = tabelle.rows[0].cells
+    zeile[0].width = Pt(250)
+    zeile[1].width = Pt(330)
+
+
+    p_name = zeile[1].paragraphs[0]
     p_name.text = f"{personal_daten['firstname']} {personal_daten['lastname']}"
     p_name.style = "Heading 1"
+    p_name.paragraph_format.space_before = Pt(55)
+
+
+    if bild_pfad:
+        p_bild = zeile[0].paragraphs[0]
+        p_bild.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run_bild = p_bild.add_run()
+        run_bild.add_picture(bild_pfad, width=Inches(1.2), height=Inches(1.7))
+
+    blauen_abschnitt_erstellen(mein_doc, "Persönliche Daten")
 
     # Tabelle mit 3 Zeilen und 2 Spalten erstellen
     table = doc.add_table(rows=3, cols=2)
     table.autofit = False
-    table.columns[0].width = Pt(120)  # Linke Spalte schmal
+    table.columns[0].width = Pt(210)  # Linke Spalte schmal
     table.columns[1].width = Pt(330)  # Rechte Spalte breit
+
+    for row in table.rows:
+        row.cells[0].width = Pt(210)
+        row.cells[1].width = Pt(330)
+
 
     addr = personal_daten['address']
     address_multiline = f"{addr['postal code']} {addr['city']}\n{addr['street']}"
@@ -137,36 +168,68 @@ def bildung_erstellen(doc, bildung_daten):
 
     blauen_abschnitt_erstellen(doc, "Schulischer Werdegang")
 
+    table = doc.add_table(rows=0, cols=2)
+    table.autofit = False
+
 
     for eintrag in bildung_daten:
 
-        p = doc.add_paragraph()
-        p.paragraph_format.space_after = Pt(4)
+        # Fügt automatisch eine neue Zeile unten an
+        row_cells = table.add_row().cells
 
-        # Run 1: Zeitraum (fett)
-        run_zeit = p.add_run(f"{eintrag['start_date']} bis {eintrag['end_date']}: ")
+        # Optional: Spaltenbreiten pro Zeile sichern
+        row_cells[0].width = Pt(210)
+        row_cells[1].width = Pt(330)
+
+        p_links = row_cells[0].paragraphs[0]
+        p_links.paragraph_format.space_after = Pt(20)
+        run_zeit = p_links.add_run(f"{eintrag['start_date']} bis {eintrag['end_date']}: ")
         run_zeit.bold = True
 
-        # Run 2: Schule & Abschluss (normal)
-        p.add_run(f"{eintrag['school']} – {eintrag['degree']}")
-    doc.add_paragraph()
+
+        p_rechts = row_cells[1].paragraphs[0]
+        p_rechts.paragraph_format.space_after = Pt(20)
+        p_rechts.add_run(f"{eintrag['school']} – {eintrag['degree']}")
+
+
+
 
 
 def beruf_erstellen(doc, beruf_daten):
 
     blauen_abschnitt_erstellen(doc, "Beruflicher Werdegang")
 
+    table = doc.add_table(rows=0, cols=2)
+    table.autofit = False
 
     for eintrag in beruf_daten:
-        p = doc.add_paragraph()
-        p.paragraph_format.space_after = Pt(4)
 
-        # Run 1: Zeitraum (fett gedruckt)
-        run_zeit = p.add_run(f"{eintrag['start_date']} bis {eintrag['end_date']}: ")
+        row_cells = table.add_row().cells
+
+        row_cells[0].width = Pt(210)
+        row_cells[1].width = Pt(330)
+
+        p_links = row_cells[0].paragraphs[0]
+        p_links.paragraph_format.space_after = Pt(20)
+        run_zeit = p_links.add_run(f"{eintrag['start_date']} bis {eintrag['end_date']}: ")
         run_zeit.bold = True
 
-        # Run 2: Firma & Position (normaler Text)
-        p.add_run(f"{eintrag['company']} – {eintrag['position']}")
+        p_links = row_cells[1].paragraphs[0]
+        p_links.paragraph_format.space_after = Pt(20)
+        p_links.add_run(f"{eintrag['company']} – {eintrag['position']}")
+
+
+
+    # for eintrag in beruf_daten:
+    #     p = doc.add_paragraph()
+    #     p.paragraph_format.space_after = Pt(4)
+    #
+    #     # Run 1: Zeitraum (fett gedruckt)
+    #     run_zeit = p.add_run(f"{eintrag['start_date']} bis {eintrag['end_date']}: ")
+    #     run_zeit.bold = True
+    #
+    #     # Run 2: Firma & Position (normaler Text)
+    #     p.add_run(f"{eintrag['company']} – {eintrag['position']}")
 
 
 def skill_erstellen(doc, skill_daten):
@@ -186,12 +249,12 @@ def blauen_abschnitt_erstellen(doc, titel):
 
    # Perfekte Abstände definieren:
     p.paragraph_format.space_before = Pt(24)  # Abstand nach oben
-    p.paragraph_format.space_after = Pt(10)  # Abstand nach unten zur Linie/Tabelle
+    p.paragraph_format.space_after = Pt(17)  # Abstand nach unten zur Linie/Tabelle
 
 
     run = p.add_run(titel)
     # zeile formatieren - wie größe, fett, farbe ... in dem beispiel
-    run.font.size = Pt(13)
+    run.font.size = Pt(15)
     run.font.bold = True
     run.font.color.rgb = RGBColor(0, 112, 192)
 
@@ -209,8 +272,7 @@ def blauen_abschnitt_erstellen(doc, titel):
 daten_speichern(meineDaten)
 meine_daten = daten_laden()
 mein_doc = Document("Vorlage.docx")
-blauen_abschnitt_erstellen(mein_doc, "Persönliche Daten")
-kopfzeile_erstellen(mein_doc, meine_daten["personal"])
+kopfzeile_erstellen(mein_doc, meine_daten["personal"], "kakarot1.png")
 bildung_erstellen(mein_doc, meine_daten["education"])
 beruf_erstellen(mein_doc, meine_daten["experience"])
 skill_erstellen(mein_doc, meine_daten["skills"])
