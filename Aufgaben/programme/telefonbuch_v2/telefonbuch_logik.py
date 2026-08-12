@@ -53,3 +53,21 @@ def kontakte_sortieren(dateiname="kontakte.json"):
 
     except Exception as e:
         print(f"Fehler beim Sortieren: {e}")
+
+
+def kontakte_laden():
+
+    kontakte = []
+
+    try:
+        with open("kontakte.json", "r", encoding="utf-8") as datei:
+            for zeile in datei:
+                zeile = zeile.strip()
+                if zeile:
+                    kontakt = json.loads(zeile)
+                    kontakte.append(kontakt)
+
+    except Exception as e:
+        print(f"Fehler beim Anzeigen: {e}")
+
+    return kontakte
