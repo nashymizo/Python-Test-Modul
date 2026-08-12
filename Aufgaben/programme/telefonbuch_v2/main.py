@@ -52,6 +52,7 @@ def hauptprogramm():
             name_loeschen = input("Gib einen Name ein, z.B (Max Mustermann): ")
 
             telefonbuch_logik.kontakte_loeschen(name_loeschen)
+            print(f"✅ Der Kontakt '{name_loeschen}' wurde erfolgreich gelöscht!")
 
 
         elif menu_auswahl == "3":
