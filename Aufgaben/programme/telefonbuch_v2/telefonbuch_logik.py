@@ -71,3 +71,24 @@ def kontakte_laden():
         print(f"Fehler beim Anzeigen: {e}")
 
     return kontakte
+
+
+def kontakte_loeschen(kontakt):
+
+    kontakte = kontakte_laden()
+
+    for person in kontakte:
+        if person["name"] == kontakt:
+            kontakte.remove(person)
+            break
+
+    try:
+        with open("kontakte.json", "w", encoding="utf-8") as datei:
+            for person in kontakte:
+                json.dump(person, datei, ensure_ascii=False)
+                datei.write("\n")
+
+    except Exception as e:
+        print(f"Fehler beim Löschen: {e}")
+
+    return kontakte

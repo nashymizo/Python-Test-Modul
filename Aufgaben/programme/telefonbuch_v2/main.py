@@ -49,7 +49,9 @@ def hauptprogramm():
 
         elif menu_auswahl == "2":
 
-            print("test")
+            name_loeschen = input("Gib einen Name ein, z.B (Max Mustermann): ")
+
+            telefonbuch_logik.kontakte_loeschen(name_loeschen)
 
 
         elif menu_auswahl == "3":
