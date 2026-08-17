@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harry Potter und die magischen Zahlen</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a2e;
+      color: #eaeaea;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #16213e;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      border: 1px solid #e94560;
+    }
+    h1 { font-size: 1.4rem; color: #e94560; margin-bottom: 1.5rem; }
+    .task { font-size: 2rem; font-weight: bold; margin: 1.5rem 0; color: #f5f5f5; }
+    input[type="number"] {
+      width: 100px;
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 0.3rem;
+      border-radius: 6px;
+      border: 2px solid #0f3460;
+      background: #0f3460;
+      color: #fff;
+    }
+    .btn {
+      background: #e94560;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 0.4rem;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #cf3a53; }
+    .btn-secondary { background: #0f3460; }
+    .btn-secondary:hover { background: #1a4a85; }
+    .feedback { margin-top: 1.2rem; font-size: 1.1rem; min-height: 1.5em; font-weight: bold; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="menu-screen">
+    <h1>✨ Magische Zahlen ✨</h1>
+    <p>Wähle deine Rechenart:</p>
+    <button class="btn" onclick="startTrainer('+')">Addition (+)</button>
+    <button class="btn" onclick="startTrainer('-')">Subtraktion (-)</button>
+  </div>
+
+  <div class="card hidden" id="game-screen">
+    <h1 id="mode-title">Magische Aufgabe</h1>
+    <div class="task" id="task-text">0 + 0</div>
+
+    <form onsubmit="checkAnswer(event)">
+      <input type="number" id="answer-input" required autofocus autocomplete="off">
+      <br><br>
+      <button type="submit" class="btn">Prüfen</button>
+      <button type="button" class="btn btn-secondary" onclick="showMenu()">Menü</button>
+    </form>
+
+    <div class="feedback" id="feedback-text"></div>
+  </div>
+
+  <script>
+    let currentOp = '+';
+    let correctAnswer = 0;
+
+    function startTrainer(operator) {
+      currentOp = operator;
+      document.getElementById('menu-screen').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+      document.getElementById('mode-title').innerText = operator === '+' ? '⚡ Addition' : '⚡ Subtraktion';
+      nextTask();
+    }
+
+    function showMenu() {
+      document.getElementById('game-screen').classList.add('hidden');
+      document.getElementById('menu-screen').classList.remove('hidden');
+    }
+
+    function nextTask() {
+      let z1 = Math.floor(Math.random() * 100) + 1;
+      let z2 = Math.floor(Math.random() * 100) + 1;
+
+      if (currentOp === '-') {
+        if (z2 > z1) [z1, z2] = [z2, z1];
+        correctAnswer = z1 - z2;
+      } else {
+        correctAnswer = z1 + z2;
+      }
+
+      document.getElementById('task-text').innerText = `${z1} ${currentOp} ${z2} = ?`;
+      document.getElementById('answer-input').value = '';
+      document.getElementById('feedback-text').innerText = '';
+      document.getElementById('answer-input').focus();
+    }
+
+    function checkAnswer(e) {
+      e.preventDefault();
+      const input = document.getElementById('answer-input');
+      const feedback = document.getElementById('feedback-text');
+      const val = parseInt(input.value, 10);
+
+      if (val === correctAnswer) {
+        feedback.style.color = '#4ECCA3';
+        feedback.innerText = '✨ Richtig! Ein wahrer Zauberer! ✨';
+        setTimeout(nextTask, 1200);
+      } else {
+        feedback.style.color = '#FF6B6B';
+        feedback.innerText = `💥 Oh weh! Richtig wäre ${correctAnswer} gewesen.`;
+      }
+    }
+  </script>
+</body>
+</html>
